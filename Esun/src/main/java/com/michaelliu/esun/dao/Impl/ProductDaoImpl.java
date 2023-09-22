@@ -1,9 +1,11 @@
 package com.michaelliu.esun.dao.Impl;
 
 import com.michaelliu.esun.dao.ProductDao;
+import com.michaelliu.esun.dto.ProductRequest;
 import com.michaelliu.esun.model.Product;
 import com.michaelliu.esun.rowmapper.ProductRowmaaper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -21,16 +23,51 @@ public class ProductDaoImpl implements ProductDao {
     public Product getProductById(String productid) {
         String sql="SELECT productid,productname,price,quantity " +
                 "FROM product " +
-                "WHERE ProductId=:productid";
+                "WHERE productid=:productid";
         Map<String,Object>map = new HashMap<>();
         map.put("productid",productid);
         List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowmaaper());
-
-        if (!productList.isEmpty()){
+        if (!productid.isEmpty()) {
             return productList.get(0);
         }else{
             return null;
         }
+    }
 
+    @Override
+    public String createProduct(ProductRequest productrequest) {
+
+        String sql="INSERT INTO product(productid,productname,price,quantity) " +
+                    "VALUES(:productid,:productname,:price,:quantity)";
+            Map<String,Object>map = new HashMap<>();
+            map.put("productid",productrequest.getProductid());
+            map.put("productname",productrequest.getProductname());
+            map.put("price",productrequest.getPrice());
+            map.put("quantity",productrequest.getQuantity());
+            namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map));
+            String productid = productrequest.getProductid();
+            return productid;
+        }
+
+    @Override
+    public void updateProduct(String productid, ProductRequest productRequest) {
+        String sql="UPDATE product SET productname = :productname,price = :price,quantity = :quantity " +
+                "WHERE productid=:productid";
+        Map<String,Object>map = new HashMap<>();
+        map.put("productid",productRequest.getProductid());
+        map.put("productname",productRequest.getProductname());
+        map.put("price",productRequest.getPrice());
+        map.put("quantity",productRequest.getQuantity());
+
+        namedParameterJdbcTemplate.update(sql,map);
+    }
+
+    @Override
+    public void deleteProduct(String productid) {
+        String sql ="DELETE FROM product " +
+                "WHERE productid = :productid";
+        Map<String,Object> map = new HashMap<>();
+        map.put("productid",productid);
+        namedParameterJdbcTemplate.update(sql,map);
     }
 }
