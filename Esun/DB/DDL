@@ -1,0 +1,23 @@
+CREATE DATABASE mall
+
+CREATE TABLE Product (
+                         ProductID VARCHAR(10) PRIMARY KEY NOT NULL,
+                         ProductName VARCHAR(255) NOT NULL,
+                         Price DECIMAL(10, 2) NOT NULL,
+                         Quantity INT NOT NULL
+);
+
+CREATE TABLE `Order` (
+                         OrderID VARCHAR(16) PRIMARY KEY NOT NULL,
+                         MemberID INT NOT NULL,
+                         Price DECIMAL(10, 2) NOT NULL,
+                         PayStatus INT NOT NULL
+
+CREATE TABLE OrderDetail (
+                             OrderItemSN INT PRIMARY KEY NOT NULL ,
+                             OrderID VARCHAR(16) NOT NULL,
+                             ProductID VARCHAR(10) NOT NULL,
+                             Quantity INT NOT NULL,
+                             StandPrice DECIMAL(10, 2) NOT NULL,
+                             ItemPrice DECIMAL(10, 2) NOT NULL
+);
