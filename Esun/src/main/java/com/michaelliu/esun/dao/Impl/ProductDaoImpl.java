@@ -20,6 +20,15 @@ public class ProductDaoImpl implements ProductDao {
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
+    public List<Product> getProducts() {
+        String sql = "SELECT productid,productname,price,quantity " +
+                "FROM product";
+        Map<String,Object> map = new HashMap<>();
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowmaaper());
+        return productList;
+    }
+
+    @Override
     public Product getProductById(String productid) {
         String sql="SELECT productid,productname,price,quantity " +
                 "FROM product " +
@@ -38,7 +47,7 @@ public class ProductDaoImpl implements ProductDao {
     public String createProduct(ProductRequest productrequest) {
 
         String sql="INSERT INTO product(productid,productname,price,quantity) " +
-                    "VALUES(:productid,:productname,:price,:quantity)";
+                "VALUES(:productid,:productname,:price,:quantity)";
             Map<String,Object>map = new HashMap<>();
             map.put("productid",productrequest.getProductid());
             map.put("productname",productrequest.getProductname());
