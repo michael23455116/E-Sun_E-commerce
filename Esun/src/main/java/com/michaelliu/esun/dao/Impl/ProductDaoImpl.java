@@ -3,7 +3,7 @@ package com.michaelliu.esun.dao.Impl;
 import com.michaelliu.esun.dao.ProductDao;
 import com.michaelliu.esun.dto.ProductRequest;
 import com.michaelliu.esun.model.Product;
-import com.michaelliu.esun.rowmapper.ProductRowmaaper;
+import com.michaelliu.esun.rowmapper.ProductRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -24,7 +24,7 @@ public class ProductDaoImpl implements ProductDao {
         String sql = "SELECT productid,productname,price,quantity " +
                 "FROM product";
         Map<String,Object> map = new HashMap<>();
-        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowmaaper());
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         return productList;
     }
 
@@ -35,7 +35,7 @@ public class ProductDaoImpl implements ProductDao {
                 "WHERE productid=:productid";
         Map<String,Object>map = new HashMap<>();
         map.put("productid",productid);
-        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowmaaper());
+        List<Product> productList = namedParameterJdbcTemplate.query(sql, map, new ProductRowMapper());
         if (!productid.isEmpty()) {
             return productList.get(0);
         }else{

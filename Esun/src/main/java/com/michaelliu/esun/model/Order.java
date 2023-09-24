@@ -9,4 +9,5 @@ public class Order {
     private String orderid;
     private Integer memberid;
     private BigDecimal price;
+    private boolean paystatus;
 }

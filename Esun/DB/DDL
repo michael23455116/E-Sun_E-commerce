@@ -1,3 +1,5 @@
+--product
+
 CREATE DATABASE mall
 
 CREATE TABLE Product (
@@ -6,7 +8,7 @@ CREATE TABLE Product (
                          Price DECIMAL(10, 2) NOT NULL,
                          Quantity INT NOT NULL
 );
-
+--order
 CREATE TABLE `Order` (
                          OrderID VARCHAR(16) PRIMARY KEY NOT NULL,
                          MemberID INT NOT NULL,
@@ -21,3 +23,11 @@ CREATE TABLE OrderDetail (
                              StandPrice DECIMAL(10, 2) NOT NULL,
                              ItemPrice DECIMAL(10, 2) NOT NULL
 );
+
+--member
+CREATE TABLE user
+(
+    Memberid           INT          NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Email              VARCHAR(256) NOT NULL UNIQUE KEY,
+    Password           VARCHAR(256) NOT NULL
+)
