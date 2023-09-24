@@ -26,9 +26,6 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal itemPrice = BigDecimal.ZERO;
         for(BuyItem buyItem :createOrderRequest.getBuyItemList()){
             Product product = productDao.getProductById(buyItem.getProductid());
-            //當前單價
-            BigDecimal standprice = product.getPrice();
-
             //計算總價
             BigDecimal total = product.getPrice().multiply(BigDecimal.valueOf(buyItem.getQuantity()));
             itemPrice = itemPrice.add(total);
